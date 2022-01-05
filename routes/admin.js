@@ -23,7 +23,7 @@ router.post('/add-products', function(req, res) {
 
     productHelpers.addProduct(req.body, (insertedId) => {
         let image = req.files.image
-        image.mv('../SHOPPING CART/public/product-images/' + insertedId + '.jpg', (err, done) => {
+        image.mv('../SHOPPINGCART/public/product-images/' +insertedId + '.jpg', (err, done) => {
             if (!err) {
                 res.render("admin/add-products")
 
