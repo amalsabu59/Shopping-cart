@@ -11,6 +11,7 @@ var app = express();
 var exphbs = require('express-handlebars');
 var fileUpload = require('express-fileupload');
 var db = require('./config/connection')
+var session=require('express-session')
 
 //var hbs = require('hbs');
 
@@ -28,6 +29,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(fileUpload())
+app.use(session({secret:"Key",cookie:{maxAge:6000000}}));
 db.connect((err) => {
     if (err)
         console.log('err');
