@@ -48,8 +48,11 @@
             url:'/place-order',
             method:'post',
             data:$('#checkout-form').serialize(),
-            success:(reaponse)=>{
+            success:(response)=>{
                 alert(response)
+                if(response.status){
+                    location.href='/order-success'
+                }
             }
         })
     })
