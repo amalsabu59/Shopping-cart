@@ -72,9 +72,13 @@ router.get('/logout',(req,res)=>{
 })   
 router.get('/cart',verifyLogin,async(req,res)=>{
     let products=await userHelpers.getCartProducts(req.session.user._id)
-    let total=await userHelpers.getTotalAmount(req.session.user._id)
+    let total=0   
+    if(products.length>0){
+     
+    total=await userHelpers.getTotalAmount(req.session.user._id)
     console.log(products);
-
+    }
+    
     res.render('user/cart',{products,user:req.session.user,total})
 })
 router.get('/add-to-cart/:id',verifyLogin,(req,res)=>{
@@ -124,7 +128,11 @@ router.get('/view-order-products/:id',async(req,res)=>{
     let products=await userHelpers.getOrderProducts(req.params.id)
     res.render('user/view-order-products',{user:req.session.user,products})
 })
-router.post('/verify-payment',(req,res)=>{
+router.post('/verfiy-payment',(req,res)=>{
     console.log(req.body);
+    userHelpers.verifyPayment(req.body).then(()=>{
+        console.log("payment success");
+        res.json({status:true})
+    })
 })
 module.exports = router;
